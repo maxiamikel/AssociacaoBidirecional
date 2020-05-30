@@ -1,0 +1,124 @@
+
+
+Uma relação bidirecional é uma relação em POO que permite uma relação em dupla sentido, 
+na qual cada uma das classes relacionadas tem a forma para ver uma com outra via uma referência.
+Para examplificar, o senário abaixo será usado:
+
+Sigue
+=======
+
+package aula28052020_Collections.familia;
+
+import java.util.ArrayList;
+
+public class Pai {
+	private String nome;
+	private int cpf;
+	ArrayList<Filho> filhos = new ArrayList<>();
+
+	public Pai(int cpf, String nome) {
+		this.cpf = cpf;
+		this.nome = nome;
+		this.filhos = filhos;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public int getCpf() {
+		return cpf;
+	}
+
+	public ArrayList<Filho> getFilhos() {
+		return filhos;
+	}
+
+	public void addFilhos(Filho f) {
+		this.filhos.add(f);
+	}
+
+	public int contarFilhos() {
+		int quantidade = 0;
+		for (int i = 0; i < this.filhos.size(); i += 1) {
+			quantidade += 1;
+		}
+		return quantidade;
+	}
+
+}
+
+
+
+------------------------------------------------
+
+
+package aula28052020_Collections.familia;
+
+public class Filho {
+	private String nome;
+	private int cpf;
+	private Pai pai;
+
+	public Filho(int cpf, String nome, Pai pai) {
+		this.cpf = cpf;
+		this.nome = nome;
+		this.pai = pai;
+		this.pai.addFilhos(this);
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public int getCpf() {
+		return cpf;
+	}
+
+	public Pai getPai() {
+		return pai;
+	}
+
+}
+
+
+
+------------------------------------------------------
+
+
+package aula28052020_Collections.familia;
+
+public class AppFamilia {
+
+	public static void main(String[] args) {
+		Pai jose = new Pai(012, "José Dessources Lachapelle");
+
+		Filho primeiro = new Filho(124, "Jean Jacques Dessources", jose);
+		Filho segundo = new Filho(1220, "Maria Altagracia Dessources", jose);
+		Filho terceiro = new Filho(0124, "Juna Jacqueline Dessources", jose);
+
+		jose.addFilhos(primeiro);
+		jose.addFilhos(segundo);
+		jose.addFilhos(terceiro);
+
+		imprimirNaTela(jose);
+
+	}
+
+	public static void imprimirNaTela(Pai p) {
+		System.out.println("Familia");
+		System.out.println("Dados do Pai");
+		System.out.println("CPF...: " + p.getCpf());
+		System.out.println("NOME..: " + p.getNome());
+		System.out.println("-------------------------");
+		System.out.println("Fihlo (s) ");
+		for (int i = 0; i < p.filhos.size(); i += 1) {
+			System.out.println(i + 1 + "-");
+			System.out.println("CPF: " + p.getFilhos().get(i).getCpf());
+			System.out.println("NOME: " + p.getFilhos().get(i).getNome());
+			System.out.println("Filho de: " + p.getFilhos().get(i).getPai().getNome());
+			System.out.println();
+		}
+	}
+
+}
